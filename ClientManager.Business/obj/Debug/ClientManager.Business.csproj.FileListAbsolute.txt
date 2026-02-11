@@ -1,0 +1,12 @@
+\\tsclient\ClientManager\ClientManager.Business\obj\Debug\ClientManager.Business.csproj.AssemblyReference.cache
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\bin\Debug\ClientManager.Business.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\bin\Debug\ClientManager.Business.pdb
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\bin\Debug\ClientManager.Data.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\bin\Debug\EntityFramework.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\bin\Debug\ClientManager.Data.pdb
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\bin\Debug\EntityFramework.xml
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\obj\Debug\ClientManager.Business.csproj.AssemblyReference.cache
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\obj\Debug\ClientManager.Business.csproj.CoreCompileInputs.cache
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\obj\Debug\ClientMa.A21574F3.Up2Date
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\obj\Debug\ClientManager.Business.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Business\obj\Debug\ClientManager.Business.pdb

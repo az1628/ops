@@ -1,0 +1,40 @@
+<Application x:Class="ClientManager.App.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             StartupUri="Views/MainWindow.xaml">
+    <Application.Resources>
+        <!-- Minimal global styles — intentionally dated looking -->
+        <Style TargetType="Button" x:Key="PrimaryButton">
+            <Setter Property="Background" Value="#2C3E50" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Padding" Value="15,8" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+
+        <Style TargetType="DataGrid">
+            <Setter Property="AutoGenerateColumns" Value="False" />
+            <Setter Property="IsReadOnly" Value="True" />
+            <Setter Property="RowHeaderWidth" Value="0" />
+            <Setter Property="GridLinesVisibility" Value="Horizontal" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="BorderBrush" Value="#DDD" />
+            <Setter Property="AlternatingRowBackground" Value="#F9F9F9" />
+        </Style>
+
+        <Style TargetType="TextBox" x:Key="FormTextBox">
+            <Setter Property="Padding" Value="6,4" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Margin" Value="0,2,0,8" />
+            <Setter Property="BorderBrush" Value="#CCC" />
+        </Style>
+
+        <Style TargetType="Label" x:Key="FormLabel">
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Foreground" Value="#2C3E50" />
+            <Setter Property="Margin" Value="0,4,0,0" />
+        </Style>
+    </Application.Resources>
+</Application>

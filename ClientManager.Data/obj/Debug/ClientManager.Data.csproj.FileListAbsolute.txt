@@ -1,0 +1,12 @@
+\\tsclient\ClientManager\ClientManager.Data\obj\Debug\ClientManager.Data.csproj.AssemblyReference.cache
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\bin\Debug\ClientManager.Data.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\bin\Debug\ClientManager.Data.pdb
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\bin\Debug\EntityFramework.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\bin\Debug\EntityFramework.xml
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\obj\Debug\ClientManager.Data.csproj.AssemblyReference.cache
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\obj\Debug\ClientManager.Data.csproj.CoreCompileInputs.cache
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\obj\Debug\ClientMa.5099C528.Up2Date
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\obj\Debug\ClientManager.Data.dll
+C:\Users\abubakarzahid\Documents\project\ClientManager.Data\obj\Debug\ClientManager.Data.pdb
