@@ -5,17 +5,21 @@ using System.Windows.Input;
 using ClientManager.App.Helpers;
 using ClientManager.Business.Services;
 using ClientManager.Data.Entities;
+using Microsoft.Extensions.DependencyInjection;
+
 
 namespace ClientManager.App.Views
 {
     public partial class ClientListPage : Page
     {
-        private readonly ClientService _clientService = new ClientService();
+        private readonly ClientService _clientService;
 
-        public ClientListPage()
+        public ClientListPage(ClientService clientService)
         {
             InitializeComponent();
+            _clientService = clientService;
         }
+
 
         private void ClientListPage_OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -65,13 +69,17 @@ namespace ClientManager.App.Views
         {
             if (dgClients.SelectedItem is Client selected)
             {
-                NavigationHelper.NavigateTo(new ClientDetailPage(selected.ClientId));
+                var page = App.Services.GetRequiredService<ClientDetailPage>();
+                page.Load(selected.ClientId);
+                NavigationHelper.NavigateTo(page);
             }
         }
 
         private void BtnNewClient_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ClientDetailPage(0));
+            var page = App.Services.GetRequiredService<ClientDetailPage>();
+            page.Load(0);
+            NavigationHelper.NavigateTo(page);
         }
     }
 }

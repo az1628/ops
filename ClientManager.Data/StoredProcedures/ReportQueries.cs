@@ -1,7 +1,8 @@
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Linq;
 using ClientManager.Data.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClientManager.Data.StoredProcedures
 {
@@ -15,19 +16,32 @@ namespace ClientManager.Data.StoredProcedures
         public decimal TotalWithdrawals { get; set; }
     }
 
-    public class ReportQueries
+    public interface IReportQueries
     {
+        List<ClientSummaryReport> GetClientSummaryReport(string statusFilter = null);
+    }
+
+    public class ReportQueries: IReportQueries
+    {
+        private readonly ClientManagerDbContext db;
+
+        public ReportQueries(ClientManagerDbContext context)
+        {
+            db = context;
+        }
         public List<ClientSummaryReport> GetClientSummaryReport(string statusFilter = null)
         {
-            using (var db = new ClientManagerDbContext())
+            if (statusFilter == null)
             {
-                var param = new SqlParameter("@StatusFilter",
-                    (object)statusFilter ?? System.DBNull.Value);
-
-                return db.Database.SqlQuery<ClientSummaryReport>(
-                    "EXEC sp_GetClientSummaryReport @StatusFilter", param)
+                return db.ClientSummaryReports
+                    .FromSqlRaw("EXEC sp_GetClientSummaryReport @StatusFilter = NULL")
                     .ToList();
             }
+
+            return db.ClientSummaryReports
+                .FromSqlRaw("EXEC sp_GetClientSummaryReport {0}", statusFilter)
+                .ToList();
         }
     }
+  
 }

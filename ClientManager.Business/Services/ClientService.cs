@@ -8,9 +8,16 @@ namespace ClientManager.Business.Services
 {
     public class ClientService
     {
+        private readonly IClientRepository _clientRepo;
+        private readonly IAccountRepository _accountRepo;
+        public ClientService(IClientRepository clientRepository, IAccountRepository accountRepository)
+        {
+             _clientRepo = clientRepository;
+            _accountRepo = accountRepository;
+
+        }
         // No DI — direct instantiation
-        private readonly ClientRepository _clientRepo = new ClientRepository();
-        private readonly AccountRepository _accountRepo = new AccountRepository();
+       
 
         public List<Client> GetAllClients()
         {

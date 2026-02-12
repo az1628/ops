@@ -1,7 +1,8 @@
+using ClientManager.App.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Windows;
 using System.Windows.Controls;
-using ClientManager.App.Helpers;
 
 namespace ClientManager.App.Views
 {
@@ -42,7 +43,8 @@ namespace ClientManager.App.Views
             {
                 SessionHelper.Login(username);
                 _mainWindow.ShowNavigation(username);
-                NavigationHelper.NavigateTo(new DashboardPage());
+                var page = App.Services.GetRequiredService<DashboardPage>();
+                NavigationHelper.NavigateTo(page);
             }
             else
             {

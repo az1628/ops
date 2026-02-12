@@ -1,5 +1,6 @@
 using System.Windows;
 using ClientManager.App.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientManager.App.Views
 {
@@ -13,7 +14,8 @@ namespace ClientManager.App.Views
         private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
         {
             NavigationHelper.MainFrame = MainFrame;
-            NavigationHelper.NavigateTo(new LoginPage(this));
+            var page = App.Services.GetRequiredService<LoginPage>();
+            NavigationHelper.NavigateTo(page);
         }
 
         public void ShowNavigation(string username)
@@ -34,24 +36,28 @@ namespace ClientManager.App.Views
 
         private void BtnDashboard_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new DashboardPage());
+            var page = App.Services.GetRequiredService<DashboardPage>();
+            NavigationHelper.NavigateTo(page);
         }
 
         private void BtnClients_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ClientListPage());
+            var page = App.Services.GetRequiredService<ClientListPage>();
+            NavigationHelper.NavigateTo(page);
         }
 
         private void BtnReports_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ReportsPage());
+            var page = App.Services.GetRequiredService<ReportsPage>();
+            NavigationHelper.NavigateTo(page);
         }
 
         private void BtnLogout_Click(object sender, RoutedEventArgs e)
         {
             SessionHelper.Logout();
             HideNavigation();
-            NavigationHelper.NavigateTo(new LoginPage(this));
+            var page = App.Services.GetRequiredService<LoginPage>();
+            NavigationHelper.NavigateTo(page);
         }
     }
 }

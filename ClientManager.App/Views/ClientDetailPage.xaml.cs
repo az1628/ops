@@ -5,18 +5,24 @@ using System.Windows.Controls;
 using ClientManager.App.Helpers;
 using ClientManager.Business.Services;
 using ClientManager.Data.Entities;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientManager.App.Views
 {
     public partial class ClientDetailPage : Page
     {
-        private readonly ClientService _clientService = new ClientService();
-        private readonly int _clientId;
+        private readonly ClientService _clientService;
+        private int _clientId;
         private Client _currentClient;
 
-        public ClientDetailPage(int clientId)
+        public ClientDetailPage(ClientService clientService)
         {
             InitializeComponent();
+            _clientService = clientService;
+        }
+
+        public void Load(int clientId)
+        {
             _clientId = clientId;
         }
 
@@ -31,14 +37,11 @@ namespace ClientManager.App.Views
                 txtPageTitle.Text = "New Client";
                 btnDelete.Visibility = Visibility.Collapsed;
                 accountsPanel.Visibility = Visibility.Collapsed;
-
-                // Default selections
-                cmbStatus.SelectedIndex = 2; // Prospect
-                cmbRisk.SelectedIndex = 1;   // Medium
+                cmbStatus.SelectedIndex = 2;
+                cmbRisk.SelectedIndex = 1;
             }
         }
 
-        // Legacy: manual property-by-property binding instead of data binding / MVVM
         private void LoadClient()
         {
             try
@@ -59,11 +62,9 @@ namespace ClientManager.App.Views
                 txtAddress.Text = _currentClient.Address;
                 txtNotes.Text = _currentClient.Notes;
 
-                // Legacy: ugly ComboBox selection by iterating items
                 SelectComboItem(cmbStatus, _currentClient.Status);
                 SelectComboItem(cmbRisk, _currentClient.RiskProfile);
 
-                // Load accounts
                 var accounts = _clientService.GetClientAccounts(_clientId);
                 dgAccounts.ItemsSource = accounts;
                 accountsPanel.Visibility = accounts.Any() ? Visibility.Visible : Visibility.Collapsed;
@@ -75,7 +76,6 @@ namespace ClientManager.App.Views
             }
         }
 
-        // Legacy helper — should be a converter or proper binding
         private void SelectComboItem(ComboBox combo, string value)
         {
             if (string.IsNullOrEmpty(value)) return;
@@ -98,7 +98,6 @@ namespace ClientManager.App.Views
         {
             txtError.Text = "";
 
-            // Build or update client from form fields — legacy manual approach
             var client = _currentClient ?? new Client();
             client.FirstName = txtFirstName.Text.Trim();
             client.LastName = txtLastName.Text.Trim();
@@ -114,7 +113,8 @@ namespace ClientManager.App.Views
             {
                 MessageBox.Show("Client saved successfully.", "Success",
                     MessageBoxButton.OK, MessageBoxImage.Information);
-                NavigationHelper.NavigateTo(new ClientListPage());
+                var page = App.Services.GetRequiredService<ClientListPage>();
+                NavigationHelper.NavigateTo(page);
             }
             else
             {
@@ -136,7 +136,8 @@ namespace ClientManager.App.Views
                 {
                     _clientService.DeleteClient(_clientId);
                     MessageBox.Show("Client deleted.", "Done", MessageBoxButton.OK, MessageBoxImage.Information);
-                    NavigationHelper.NavigateTo(new ClientListPage());
+                    var page = App.Services.GetRequiredService<ClientListPage>();
+                    NavigationHelper.NavigateTo(page);
                 }
                 catch (Exception ex)
                 {
@@ -148,7 +149,8 @@ namespace ClientManager.App.Views
 
         private void BtnBack_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ClientListPage());
+            var page = App.Services.GetRequiredService<ClientListPage>();
+            NavigationHelper.NavigateTo(page);
         }
     }
 }

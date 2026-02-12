@@ -3,20 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using ClientManager.Business.Models;
 using ClientManager.Data.Context;
-using ClientManager.Data.Repositories;
 using ClientManager.Data.StoredProcedures;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClientManager.Business.Services
 {
     public class ReportService
     {
-        private readonly ReportQueries _reportQueries = new ReportQueries();
+        private readonly IReportQueries _reportQueries;
+        private readonly ClientManagerDbContext db;
+
+        public ReportService(IReportQueries reportQueries, ClientManagerDbContext context)
+        {
+            _reportQueries = reportQueries;
+            db = context;
+        }
 
         // Legacy smell: service directly creating DbContext instead of using repository
         public DashboardStats GetDashboardStats()
         {
-            using (var db = new ClientManagerDbContext())
-            {
                 var stats = new DashboardStats();
                 stats.TotalClients = db.Clients.Count();
                 stats.ActiveClients = db.Clients.Count(c => c.Status == "Active");
@@ -29,7 +34,7 @@ namespace ClientManager.Business.Services
                     .Count(t => t.TransactionDate >= thirtyDaysAgo);
 
                 return stats;
-            }
+           
         }
 
         public List<ClientSummaryReport> GetClientSummary(string statusFilter = null)

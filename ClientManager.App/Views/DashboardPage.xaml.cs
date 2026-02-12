@@ -4,16 +4,17 @@ using System.Windows.Controls;
 using ClientManager.App.Helpers;
 using ClientManager.Business.Helpers;
 using ClientManager.Business.Services;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace ClientManager.App.Views
 {
     public partial class DashboardPage : Page
     {
-        // Direct instantiation — no DI
-        private readonly ReportService _reportService = new ReportService();
+        private readonly ReportService _reportService;
 
-        public DashboardPage()
+        public DashboardPage(ReportService reportService)
         {
+            _reportService = reportService;
             InitializeComponent();
         }
 
@@ -39,17 +40,21 @@ namespace ClientManager.App.Views
 
         private void BtnViewClients_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ClientListPage());
+            var page = App.Services.GetRequiredService<ClientListPage>();
+            NavigationHelper.NavigateTo(page);
         }
 
         private void BtnRunReports_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ReportsPage());
+            var page = App.Services.GetRequiredService<ReportsPage>();
+            NavigationHelper.NavigateTo(page);
         }
 
         private void BtnNewClient_Click(object sender, RoutedEventArgs e)
         {
-            NavigationHelper.NavigateTo(new ClientDetailPage(0));
+            var page = App.Services.GetRequiredService<ClientDetailPage>();
+            page.Load(0);
+            NavigationHelper.NavigateTo(page);
         }
     }
 }

@@ -9,10 +9,11 @@ namespace ClientManager.App.Views
 {
     public partial class ReportsPage : Page
     {
-        private readonly ReportService _reportService = new ReportService();
+        private readonly ReportService _reportService;
 
-        public ReportsPage()
+        public ReportsPage(ReportService reportService)
         {
+            _reportService = reportService;
             InitializeComponent();
         }
 
