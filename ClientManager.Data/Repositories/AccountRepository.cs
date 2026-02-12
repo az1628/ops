@@ -12,7 +12,7 @@ namespace ClientManager.Data.Repositories
         Account GetAccountById(int accountId);
         void SaveAccount(Account account);
     }
-    public class AccountRepository
+    public class AccountRepository: IAccountRepository
     {
         private readonly ClientManagerDbContext _db;
 

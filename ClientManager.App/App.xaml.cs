@@ -45,6 +45,16 @@ namespace ClientManager.App
                     services.AddScoped<IReportQueries, ReportQueries>();
                     services.AddScoped<ClientService>();
                     services.AddScoped<ReportService>();
+
+                    // Repositories
+                    services.AddScoped<IClientRepository, ClientRepository>();
+                    services.AddScoped<IReportQueries, ReportQueries>();
+
+                    // Services
+                    services.AddScoped<ClientService>();
+                    services.AddScoped<ReportService>();
+                    services.AddScoped<IAccountRepository, AccountRepository>();
+
                     // Pages
                     services.AddTransient<LoginPage>();
                     services.AddTransient<DashboardPage>();
