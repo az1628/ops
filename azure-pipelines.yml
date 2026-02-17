@@ -65,20 +65,9 @@ stages:
         artifactName: 'ClientManagerApp'
         targetPath: '$(Pipeline.Workspace)\app'
 
-    - task: PowerShell@2
+    - script: |
+        mkdir C:\Deployments\ClientManager\Staging 2>nul
+        del /q /s C:\Deployments\ClientManager\Staging\* 2>nul
+        xcopy "$(Pipeline.Workspace)\ClientManagerApp\*" "C:\Deployments\ClientManager\Staging\" /E /Y
+        dir C:\Deployments\ClientManager\Staging
       displayName: 'Deploy to Staging'
-      inputs:
-        targetType: 'inline'
-        script: |
-          $deployPath = "C:\Deployments\ClientManager\Staging"
-          
-          if (!(Test-Path $deployPath)) {
-              New-Item -ItemType Directory -Path $deployPath -Force
-          }
-          
-          Remove-Item "$deployPath\*" -Recurse -Force -ErrorAction SilentlyContinue
-          
-          Copy-Item "$(Pipeline.Workspace)\app\*" -Destination $deployPath -Recurse
-          
-          Write-Host "Deployed to $deployPath"
-          Get-ChildItem $deployPath | Format-Table Name, Length
