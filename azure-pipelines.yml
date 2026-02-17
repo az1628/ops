@@ -1,23 +1,12 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
-
-trigger:
-  branches:
-    include:
-      - main
 stages:
 - stage: Build
   jobs:
   - job: BuildJob
     pool:
       name: 'MyVM'
-
     variables:
       solution: '**/*.sln'
       buildConfiguration: 'Release'
-
     steps:
     - task: DotNetCoreCLI@2
       displayName: 'Restore'
@@ -45,15 +34,19 @@ stages:
         command: publish
         publishWebProjects: false
         projects: '**/ClientManager.App.csproj'
-        arguments: '--configuration $(BuildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+        arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
         zipAfterPublish: false
 
     - task: PublishPipelineArtifact@1
+      displayName: 'Publish Artifact'
       inputs:
-        targetPath: '$(Build.ArtifactStagingDirectory)' 
+        targetPath: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'ClientManagerApp'
 
-
+- stage: Deploy
+  dependsOn: Build
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+  jobs:
   - job: DeployJob
     pool:
       name: 'MyVM'
@@ -68,6 +61,6 @@ stages:
     - script: |
         mkdir C:\Deployments\ClientManager\Staging 2>nul
         del /q /s C:\Deployments\ClientManager\Staging\* 2>nul
-        xcopy "$(Pipeline.Workspace)\ClientManagerApp\*" "C:\Deployments\ClientManager\Staging\" /E /Y
+        xcopy "$(Pipeline.Workspace)\app\*" "C:\Deployments\ClientManager\Staging\" /E /Y
         dir C:\Deployments\ClientManager\Staging
       displayName: 'Deploy to Staging'
