@@ -63,7 +63,7 @@ stages:
       inputs:
         buildType: 'current'
         artifactName: 'ClientManagerApp'
-        targetPath: '$(Pipeline.Workspace)/app'
+        targetPath: '$(Pipeline.Workspace)\app'
 
     - task: PowerShell@2
       displayName: 'Deploy to Staging'
