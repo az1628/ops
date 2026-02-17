@@ -67,6 +67,7 @@ stages:
     - task: PowerShell@2
       displayName: 'Deploy to Staging'
       inputs:
+        buildType: 'current'
         targetType: 'inline'
         script: |
           $deployPath = "C:\Deployments\ClientManager\Staging"
