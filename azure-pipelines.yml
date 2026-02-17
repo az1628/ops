@@ -61,13 +61,13 @@ stages:
     - task: DownloadPipelineArtifact@2
       displayName: 'Download Artifact'
       inputs:
+        buildType: 'current'
         artifactName: 'ClientManagerApp'
         targetPath: '$(Pipeline.Workspace)/app'
 
     - task: PowerShell@2
       displayName: 'Deploy to Staging'
       inputs:
-        buildType: 'current'
         targetType: 'inline'
         script: |
           $deployPath = "C:\Deployments\ClientManager\Staging"
