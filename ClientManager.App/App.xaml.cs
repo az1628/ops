@@ -31,29 +31,19 @@ namespace ClientManager.App
                 })
                 .ConfigureServices((context, services) =>
                 {
-                    services.AddSingleton<MainWindow>();
-
+                    // DbContext
                     services.AddDbContext<ClientManagerDbContext>(options =>
                         options.UseSqlServer(
                             context.Configuration.GetConnectionString("ClientManagerDb")));
 
                     // Repositories
-                    services.AddScoped<ClientRepository>();
-                    services.AddScoped<AccountRepository>();
-
-                    // Stored procedures / queries
-                    services.AddScoped<IReportQueries, ReportQueries>();
-                    services.AddScoped<ClientService>();
-                    services.AddScoped<ReportService>();
-
-                    // Repositories
                     services.AddScoped<IClientRepository, ClientRepository>();
+                    services.AddScoped<IAccountRepository, AccountRepository>();
                     services.AddScoped<IReportQueries, ReportQueries>();
 
                     // Services
                     services.AddScoped<ClientService>();
                     services.AddScoped<ReportService>();
-                    services.AddScoped<IAccountRepository, AccountRepository>();
 
                     // Pages
                     services.AddTransient<LoginPage>();
@@ -62,14 +52,8 @@ namespace ClientManager.App
                     services.AddTransient<ClientDetailPage>();
                     services.AddTransient<ReportsPage>();
 
-                    services.AddTransient<DashboardPage>();
-                    services.AddTransient<ReportsPage>();
-
-
-                    // Services
+                    // Main Window
                     services.AddSingleton<MainWindow>();
-                   
-
                 })
                 .Build();
         }

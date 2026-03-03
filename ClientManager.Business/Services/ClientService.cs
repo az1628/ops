@@ -15,9 +15,7 @@ namespace ClientManager.Business.Services
              _clientRepo = clientRepository;
             _accountRepo = accountRepository;
 
-        }
-        // No DI — direct instantiation
-       
+        }       
 
         public List<Client> GetAllClients()
         {
