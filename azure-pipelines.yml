@@ -42,27 +42,3 @@ stages:
       inputs:
         targetPath: '$(Build.ArtifactStagingDirectory)'
         artifactName: 'ClientManagerApp'
-
-- stage: Deploy
-  dependsOn: Build
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  jobs:
-  - job: DeployJob
-    pool:
-      name: 'MyVM'
-    steps:
-    - task: DownloadPipelineArtifact@2
-      displayName: 'Download Artifact'
-      inputs:
-        buildType: 'current'
-        artifactName: 'ClientManagerApp'
-        targetPath: '$(Pipeline.Workspace)\app'
-
-    - task: CmdLine@2
-      displayName: 'Deploy to Staging'
-      inputs:
-        script: |
-          if not exist "C:\Deployments\ClientManager\Staging" mkdir "C:\Deployments\ClientManager\Staging"
-          del /q /s "C:\Deployments\ClientManager\Staging\*" 2>nul
-          xcopy "$(Pipeline.Workspace)\app\*" "C:\Deployments\ClientManager\Staging\" /E /Y
-          dir "C:\Deployments\ClientManager\Staging"
